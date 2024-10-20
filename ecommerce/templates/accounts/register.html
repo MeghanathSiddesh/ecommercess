@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multi-Step Registration Form</title>
+    <link rel="stylesheet" href="{% static 'fonts/material-design-iconic-font/css/material-design-iconic-font.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <style>
+        .step-section { display: none; }
+        .step-section.active { display: block; }
+        .button-container { margin-top: 20px; }
+        .button { padding: 10px 20px; border: none; cursor: pointer; }
+        .next-btn { background-color: #4CAF50; color: white; }
+        .prev-btn { background-color: #f44336; color: white; }
+        .button[disabled] { background-color: #ccc; cursor: not-allowed; }
+    </style>
+</head>
+<body>
+
+<div class="wrapper">
+    <form id="wizard-form" method="post">
+		{% csrf_token %}
+        <!-- SECTION 1 -->
+        <section class="step-section active" id="step-1">
+            <div class="inner">
+                <div class="image-holder">
+                    <img src="{% static 'images/form-wizard-1.jpg' %}" alt="Step 1">
+                </div>
+                <div class="form-content">
+                    <div class="form-header">
+                        <h3>Registration - Step 1</h3>
+                    </div>
+                    <p>Please fill with your details</p>
+					<div class="form-holder">
+						<input type="text" placeholder="User Name(remember for login)" name="username" class="form-control">
+					</div>
+					<br>
+                    <div class="form-row">
+                        <div class="form-holder">
+                            <input type="text" placeholder="First Name" name="firstname" class="form-control">
+                        </div>
+                        <div class="form-holder">
+                            <input type="text" placeholder="Last Name" name="lastname" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-holder">
+                            <input type="text" placeholder="Your Email" name="email" class="form-control">
+                        </div>
+                        <div class="form-holder">
+                            <input type="text" placeholder="Phone Number" name="phone_field" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-holder">
+                            <input type="text" placeholder="Age" class="form-control" name="age">
+                        </div>
+                        <div class="form-holder">
+                            <label>
+                                <input type="radio" name="gender" value="male"  checked> Male
+                            </label>
+                            <label>
+                                <input type="radio" name="gender" value="female" > Female
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 2 -->
+        <section class="step-section" id="step-2">
+            <div class="inner">
+                <div class="image-holder">
+                    <img src="{% static 'images/form-wizard-2.jpg' %}" alt="Step 2">
+                </div>
+                <div class="form-content">
+                    <div class="form-header">
+                        <h3>Registration - Step 2</h3>
+                    </div>
+                    <p>Please fill with additional info</p>
+                    <div class="form-row">
+                        <div class="form-holder w-100">
+                            <input type="text" placeholder="Address" name="address" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-holder">
+                            <input type="text" placeholder="City" name="city" class="form-control">
+                        </div>
+                        <div class="form-holder">
+                            <input type="text" placeholder="Zip Code" name="zipcode" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-holder">
+                            <input type="password" placeholder="Password" name="password" class="form-control" required>
+                        </div>
+                        <div class="form-holder">
+                            <input type="password" placeholder="Confirm Password" name="confirm_password" class="form-control" required>
+                        </div>
+                    </div>
+                    
+					
+					
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 3 -->
+        {% comment %} <section class="step-section" id="step-3">
+            <div class="inner">
+                <div class="image-holder">
+                    <img src="{% static 'images/form-wizard-3.jpg' %}" alt="Step 3">
+                </div>
+                <div class="form-content">
+                    <div class="form-header">
+                        <h3>Registration - Step 3</h3>
+                    </div>
+                    <p>Send an optional message</p>
+                    <div class="form-row">
+                        <div class="form-holder w-100">
+                            <textarea placeholder="Your message here!" name="message" class="form-control" style="height: 99px;"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section> {% endcomment %}
+
+        <!-- BUTTONS -->
+        <div class="button-container">
+            <button type="button" class="button prev-btn" id="prevBtn" onclick="nextPrev(-1)">Previous</button>
+            <button type="button" class="button next-btn" id="nextBtn" onclick="nextPrev(1)">Next</button>
+        </div>
+    </form>
+</div>
+
+<!-- JQUERY -->
+<script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+
+<!-- JavaScript for step navigation -->
+<script>
+    let currentStep = 0;
+    showStep(currentStep);
+
+    function showStep(step) {
+        const sections = document.getElementsByClassName('step-section');
+        sections[step].classList.add('active');
+
+        // Disable/enable buttons based on step
+        document.getElementById("prevBtn").style.display = step === 0 ? "none" : "inline";
+        document.getElementById("nextBtn").innerHTML = step === (sections.length - 1) ? "Submit" : "Next";
+    }
+
+    function nextPrev(n) {
+        const sections = document.getElementsByClassName('step-section');
+        sections[currentStep].classList.remove('active');
+        currentStep += n;
+
+        // If at end of form, submit
+        if (currentStep >= sections.length) {
+            document.getElementById('wizard-form').submit();
+            return false;
+        }
+        showStep(currentStep);
+    }
+</script>
+
+</body>
+</html>

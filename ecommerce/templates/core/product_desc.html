@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Detail</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Swiper CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+    <style>
+        .product-card {
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            overflow: hidden;
+            transition: transform 0.3s;
+            display: flex; /* Use flex to align items */
+            flex-direction: column; /* Stack items vertically */
+            margin-bottom: 40px; /* Spacing below product card */
+        }
+
+        .product-card:hover {
+            transform: scale(1.05);
+        }
+
+        .product-image {
+            height: auto; /* Let the height adjust automatically */
+            max-height: 300px; /* Set a max height */
+            object-fit: cover;
+            width: 100%;
+        }
+
+        .product-info {
+            padding: 15px;
+        }
+
+        /* Responsive adjustments */
+        @media (min-width: 768px) {
+            .product-card {
+                flex-direction: row; /* Align items side by side on larger screens */
+            }
+
+            .img-container {
+                width: 50%; /* Set image container to take half width */
+            }
+
+            .product-info {
+                width: 50%; /* Set info container to take half width */
+            }
+        }
+
+        /* Swiper Styles */
+        .swiper-container {
+            margin-top: 20px; /* Space above the slider */
+        }
+
+        .swiper-slide {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #f9f9f9; /* Background color for slides */
+            border-radius: 10px; /* Rounded corners */
+        }
+
+        .swiper-slide img {
+            max-width: 100%; /* Responsive image */
+            border-radius: 10px; /* Rounded corners for images */
+        }
+
+        .swiper-button-next,
+        .swiper-button-prev {
+            color: green; /* Set arrow color to green */
+            width: 30px; /* Adjust arrow width */
+            height: 30px; /* Adjust arrow height */
+            margin-top: -50px; /* Position above the images */
+        }
+
+        .btn-add-to-cart {
+            background-color: green; /* Set button color to green */
+            color: white; /* Button text color */
+            border: none; /* Remove border */
+        }
+
+        .testimonial-content {
+            text-align: center; /* Center text inside testimonials */
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-10"> <!-- Changed to col-md-10 for more width -->
+                <div class="product-card">
+                    <div class="img-container">
+                        <img src="{{ product.img.url }}" alt="{{ product.name }}" class="product-image">
+                    </div>
+                    <div class="product-info">
+                        <h2>{{ product.name }}</h2>
+                        <h4 class="text-success">${{ product.price }}</h4>
+                        <p><strong>Available Stocks:</strong> {{ product.product_available_count }}</p>
+                        <p><strong>Description:</strong> {{ product.desc }}</p>
+                        {% if user.is_authenticated %}
+                         <a href="{% url 'add_to_cart' product.pk %}" class="btn btn-add-to-cart">Add to Cart</a>
+                         {% else %}
+                         <div class="text-center">
+            <a  href="{% url 'user_login' %}" class="btn btn-primary">login to order </a>
+                        </div>
+                         {% endif %}
+                    </div>
+                </div>
+                
+                <!-- Testimonial Slider -->
+                <div class="swiper-container">
+                    <div class="swiper-wrapper">
+                        <div class="swiper-slide">
+                            <img src="{{ product.img.url }}" alt="{{ product.name }} Image 1">
+                        </div>
+                        <div class="swiper-slide">
+                            <img src="{{ product.img1.url }}" alt="{{ product.name }} Image 2">
+                        </div>
+                        <div class="swiper-slide">
+                            <img src="{{ product.img2.url }}" alt="{{ product.name }} Image 3">
+                        </div>
+                        <div class="swiper-slide">
+                            <img src="{{ product.img3.url }}" alt="{{ product.name }} Image 4">
+                        </div>
+                    </div>
+                    <!-- Add Pagination -->
+                    <div class="swiper-pagination"></div>
+                </div>
+                <!-- Navigation Arrows -->
+                <div class="swiper-button-next"></div>
+                <div class="swiper-button-prev"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <!-- Swiper JS -->
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+    <script>
+        const swiper = new Swiper('.swiper-container', {
+            loop: true,
+            pagination: {
+                el: '.swiper-pagination',
+                clickable: true,
+            },
+            navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev',
+            },
+            autoplay: {
+                delay: 3000,
+                disableOnInteraction: false,
+            },
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,172 @@
+{% comment %} <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <title>Cash on Delivery Notice</title>
+    <style>
+        body {
+            background-color: #f8f9fa;
+            padding: 50px;
+        }
+        .notice-card {
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+        .btn-order {
+            background-color: #28a745;
+            color: white;
+        }
+        .btn-order:hover {
+            background-color: #218838;
+        }
+        .alert {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .alert i {
+            font-size: 2rem;
+            margin-right: 10px;
+        }
+        .confirmation-code {
+            font-size: 1.25rem;
+            font-weight: bold;
+            color: #007bff;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8 notice-card">
+            <h2 class="text-center mb-4">Important Notice</h2>
+            <div class="alert alert-warning text-center" role="alert">
+                <i class="fas fa-exclamation-triangle text-warning"></i>
+                <div>
+                    <strong>Dear Valued Customer,</strong><br>
+                    We are currently experiencing some issues with our online banking system. Therefore, we kindly request that you place your orders using <strong>Cash on Delivery</strong> at this time.
+                </div>
+            </div>
+            <p class="text-center">We appreciate your understanding and patience during this time. Please click the button below to proceed with your order.</p>
+            <div class="text-center mb-4">
+                <a href="{% url 'get_current_user_address' %}" class="btn btn-order btn-lg">Order Now</a>
+            </div>
+            <p class="text-center">Please use the code below to confirm your order:</p>
+            <p class="text-center confirmation-code">{{random_code}}</p>
+            <p class="text-center">Thank you for choosing us!</p>
+        </div>
+    </div>
+</div>
+
+<!-- Font Awesome for icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html> {% endcomment %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <title>Cash on Delivery Notice</title>
+    <style>
+        body {
+            background-color: #f8f9fa;
+            padding: 50px;
+        }
+        .notice-card {
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+        .btn-order {
+            background-color: #28a745;
+            color: white;
+        }
+        .btn-order:hover {
+            background-color: #218838;
+        }
+        .alert {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .alert i {
+            font-size: 2rem;
+            margin-right: 10px;
+        }
+        .confirmation-code {
+            font-size: 1.25rem;
+            font-weight: bold;
+            color: #007bff;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8 notice-card">
+            <h2 class="text-center mb-4">Important Notice</h2>
+            <div class="alert alert-warning text-center" role="alert">
+                <i class="fas fa-exclamation-triangle text-warning"></i>
+                <div>
+                    <strong>Dear Valued Customer,</strong><br>
+                    We are currently experiencing some issues with our online banking system. Therefore, we kindly request that you place your orders using <strong>Cash on Delivery</strong> at this time.
+                </div>
+            </div>
+            <p class="text-center">We appreciate your understanding and patience during this time.</p>
+
+            <!-- Order Now button triggers the modal -->
+            <div class="text-center mb-4">
+                <button class="btn btn-order btn-lg" data-toggle="modal" data-target="#orderModal">Order Now</button>
+            </div>
+
+            <p class="text-center">Please use the code below to confirm your order:</p>
+            <p class="text-center confirmation-code">{{ random_code }}</p>
+            <p class="text-center">Thank you for choosing us!</p>
+        </div>
+    </div>
+</div>
+
+<!-- Modal for Cash on Delivery Confirmation -->
+<div class="modal fade" id="orderModal" tabindex="-1" role="dialog" aria-labelledby="orderModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="orderModalLabel">Cash on Delivery Notice</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Your order will be processed as <strong>Cash on Delivery</strong>.</p>
+                <p>Please ensure you have the correct amount ready at the time of delivery.</p>
+                <p>Thank you for your understanding!</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <a href="{% url 'get_current_user_address' %}" class="btn btn-primary">Proceed with Order</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Font Awesome for icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

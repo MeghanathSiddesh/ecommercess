@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Successful</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .card {
+            margin-top: 50px;
+        }
+        .success-message {
+            color: #28a745;
+            font-weight: bold;
+        }
+        .delivery-details {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="card shadow">
+        <div class="card-body">
+            <h2 class="text-center success-message">Your Order Has Been Placed Successfully!</h2>
+            <hr>
+            <div class="delivery-details">
+                <h4>Delivery Details</h4>
+                <div class="form-group">
+                    <label for="delivery-address">Delivery Address:</label>
+                    <textarea class="form-control" id="delivery-address" rows="3" readonly>
+                        {{address}}
+                        {{error}}
+                    </textarea>
+                </div>
+                <div class="form-group">
+                    <label for="delivery-date">Expected Delivery Date:</label>
+                    <input type="text" class="form-control" id="delivery-date" value="{{date}}" readonly>
+                </div>
+            </div>
+            <div class="text-center">
+                <a href="/" class="btn btn-primary">Return to Home</a>
+                <a href="orderlist" class="btn btn-secondary">View My Orders</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Bootstrap JS and dependencies -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
